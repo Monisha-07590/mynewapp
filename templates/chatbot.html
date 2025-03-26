@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Chatbot container */
+        .chat-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        .message {
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .user-msg {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot-msg {
+            background-color: #e0e0e0;
+            color: black;
+        }
+
+        .input-container {
+            display: flex;
+        }
+
+        .input-container input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .input-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background-color: #48eb60;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to add message to chat
+        function addMessage(content, sender) {
+            const chatBox = document.getElementById("chatBox");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message");
+            messageDiv.classList.add(sender);
+            messageDiv.textContent = content;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to bottom
+        }
+
+        // Function to simulate bot's reply
+        function botReply() {
+            const replies = [
+                "Hello! How can I help you today?",
+                "I am a friendly bot. Ask me anything!",
+                "I can help you with your queries.",
+                "Let's chat! What can I do for you?"
+            ];
+            const randomReply = replies[Math.floor(Math.random() * replies.length)];
+            addMessage(randomReply, "bot-msg");
+        }
+
+        // Function to send the user's message
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (userInput.trim()) {
+                addMessage(userInput, "user-msg");
+                document.getElementById("userInput").value = ""; // Clear input
+                setTimeout(botReply, 1000); // Simulate bot reply after 1 second
+            }
+        }
+
+        // Optional: Automatically add bot's first greeting
+        window.onload = () => {
+            setTimeout(botReply, 1000);
+        };
+    </script>
+
+</body>
+</html>
